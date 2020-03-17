@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-/* 
 Route::get('/', function () {
     return 'hola mundo :D';
-});
+})->name('home');
+/* 
+
 
 Route::get('/saluda/{nombre}', function ($nombre) {
     return "hola $nombre:  <a href=".route('nosotros').">Conocenos</a>";

@@ -15,7 +15,7 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo',500)->nullable();
+            $table->string('title',500)->nullable();
             $table->string('url_clean', 500)->nullable();
             $table->text('content')->nullable();
             $table->enum('posted', ['yes','not'])->nullable()->default('not');
