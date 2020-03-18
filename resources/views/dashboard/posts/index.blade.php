@@ -31,9 +31,12 @@
             <td>{{$post->created_at->format('d-m-Y')}}</td>
             <td>{{$post->updated_at->format('d-m-Y')}}</td>
             <td>
-                <button type="button" class="btn btn-outline-primary">
-                    Detalles
-                </button>
+            <a type="button" href="{{route('post.show',$post->id)}}" class="btn btn-outline-primary">
+                    Ver
+                </a>
+                <a type="button" href="{{route('post.edit',$post->id)}}" class="btn btn-outline-warning">
+                    Editar
+                </a>
             </td>
         </tr>
         @endforeach

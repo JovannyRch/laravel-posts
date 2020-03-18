@@ -18,7 +18,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(2);
+        $posts = Post::paginate(10);
         return view('dashboard.posts.index', ['posts'=>$posts]);
     }
 
@@ -56,9 +56,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        //$post = Post::findOrFail($id);
+        return view('dashboard.posts.show', ['post' => $post]);
     }
 
     /**
@@ -67,9 +68,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('dashboard.posts.edit', ['post' => $post]);
     }
 
     /**
