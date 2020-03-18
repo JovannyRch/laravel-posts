@@ -6,6 +6,8 @@ use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostPost;
+use Illuminate\Pagination\Paginator;
+
 
 class PostController extends Controller
 {
@@ -16,7 +18,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return "hola desde un resource";
+        $posts = Post::paginate(2);
+        return view('dashboard.posts.index', ['posts'=>$posts]);
     }
 
     /**
