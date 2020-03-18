@@ -37,6 +37,10 @@
                 <a type="button" href="{{route('post.edit',$post->id)}}" class="btn btn-outline-warning">
                     Editar
                 </a>
+            <button class="btn btn-outline-danger" data-toggle="modal" data-target="#eliminarPost" data-action="{{route('post.destroy','')}}" data-id="{{$post->id}}" >Eliminar</button>
+
+             
+               
             </td>
         </tr>
         @endforeach
@@ -45,4 +49,48 @@
 <div  style="margin: 0 auto;">
     {{$posts->links()}}
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="eliminarPost" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+                <div class="modal-header">
+                        <h5 class="modal-title">Confirmar eliminación</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    ¿Estás seguro de eliminar el registro seleccionado?
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                
+                <form  id="deleteForm" action="{{route('post.destroy',0)}}" method="post">
+                    @method('DELETE')
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  $('#eliminarPost').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) 
+  var id = button.data('id') 
+  var action = button.data('action') 
+  console.log(action+"/"+id);
+  $('#deleteForm').attr('action', action+"/"+id);
+  var modal = $(this)
+  modal.find('.modal-title').text('Estás seguro de eliminar el registro: ' + id)
+ 
+})
+</script>
+
 @endsection

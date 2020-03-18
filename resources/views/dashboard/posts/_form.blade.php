@@ -1,4 +1,4 @@
-<form action="{{ route('post.store') }}" method="put">
+
     @include('dashboard.partials.validation-error')
     @csrf
     <div class="form-group">
@@ -9,7 +9,7 @@
             name="title"
             id="title"
             placeholder="Escribe el título"
-            value="{{old('title')}}"
+            value="{{old('title',$post->title)}}"
         />
         @error('title')
             <small class="text-danger">
@@ -25,7 +25,7 @@
             name="url_clean"
             id="url_clean"
             placeholder="Escribe la url limpia"
-    value="{{old('url_clean')}}"
+    value="{{old('url_clean',$post->url_clean)}}"
         />
     </div>
     <div class="form-group">
@@ -37,7 +37,7 @@
             rows="3"
            
         >
-        {{old('content')}}
+        {{old('content',$post->content)}}
     </textarea>
         @error('content')
         <small class="text-danger">
@@ -46,4 +46,3 @@
     @enderror
     </div>
     <button type="submit" class="btn btn-primary">Crear</button>
-</form>

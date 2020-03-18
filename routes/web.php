@@ -49,3 +49,4 @@ Route::get('index', 'PostController@index');
  */
 
  Route::resource('dashboard/post', 'dashboard\PostController');
+ Route::resource('dashboard/category', 'dashboard\CategoryController');
