@@ -81,16 +81,18 @@
 </div>
 
 <script>
-  $('#eliminarPost').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) 
-  var id = button.data('id') 
-  var action = button.data('action') 
-  console.log(action+"/"+id);
-  $('#deleteForm').attr('action', action+"/"+id);
-  var modal = $(this)
-  modal.find('.modal-title').text('Estás seguro de eliminar el registro: ' + id)
- 
-})
+ window.onload(function(event){
+    $('#eliminarPost').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) 
+        var id = button.data('id') 
+        var action = button.data('action') 
+        console.log(action+"/"+id);
+        $('#deleteForm').attr('action', action+"/"+id);
+        var modal = $(this)
+        modal.find('.modal-title').text('Estás seguro de eliminar el registro: ' + id)
+        
+    }) 
+ })
 </script>
 
 @endsection

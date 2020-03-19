@@ -5,6 +5,7 @@ namespace App\Http\Controllers\dashboard;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCategoryPost;
 
 class CategoryController extends Controller
 {
@@ -26,7 +27,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.categories.create', ['category' => new Category()]);
+        
     }
 
     /**
@@ -35,9 +37,11 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryPost $request)
     {
-        //
+        $data = $request->validated();
+        Category::create($data);
+        return back()->with('status','Categoría creada con exito');
     }
 
     /**
@@ -57,9 +61,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        return view('dashboard.categories.edit', ['category' => $category]);
     }
 
     /**
@@ -69,9 +73,11 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreCategoryPost $request,Category $category)
     {
-        //
+        $data = $request->validated();
+        $category->update($data);
+        return back()->with('status','Categoría actualizada con éxito');
     }
 
     /**
