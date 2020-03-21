@@ -35,6 +35,7 @@
     </div>
     @endforelse
 </table>
+{{$categories->links()}}
 
 <!-- Modal -->
 <div class="modal fade" id="eliminarForm" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
@@ -65,7 +66,8 @@
     </div>
 </div>
 <script>
-    window.onload(function(event    ){
+    window.onload(function(event){
+        
         $('#eliminarForm').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) 
             var id = button.data('id') 

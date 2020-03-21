@@ -20,12 +20,17 @@
       
       </ul>
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a href="" class="nav-link">Logout</a>
-        </li>
-        <li class="nav-item">
-          <a href="" class="nav-link">Login</a>
-        </li>
+     
+        <a class="nav-item" href="{{ route('logout') }}"
+            onclick="event.preventDefault();
+                          document.getElementById('logout-form').submit();">
+            {{ __('Logout') }}
+        </a>
+
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+          @csrf
+      </form>
+      
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item dropdown">

@@ -28,14 +28,29 @@
     value="{{old('url_clean',$post->url_clean)}}"
         />
     </div>
+
+    <div class="form-group">
+      <label for="category_id">Seleccina una categoría</label>
+
+      <select class="form-control" name="category_id" id="category_id">
+        <option value=""  disabled>Selecciona una categoría</option>
+        @foreach ($categories as $titulo => $id)
+            <option {{$post->category_id==$id? 'selected="selected"':''}} value="{{$id}}">{{$titulo}}</option>
+        @endforeach
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="posted">Posted</label>
+      <select class="form-control" name="posted" id="posted">
+        @include('dashboard.partials.option-yes-not', ['val' => $post->posted])
+      </select>
+    </div>
     <div class="form-group">
         <label for="content">Contenido</label>
         <textarea
             class="form-control"
             name="content"
-            id="content"
-            rows="3"
-           
+            id="editor"
         >
         {{old('content',$post->content)}}
     </textarea>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\dashboard;
 
 use App\Post;
+use App\Category;
+use App\PostImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostPost;
@@ -11,11 +13,17 @@ use Illuminate\Pagination\Paginator;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
         $posts = Post::paginate(10);
@@ -29,7 +37,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('dashboard.posts.create',['post' => new Post()]);
+        $categories = Category::get()->pluck('id','titulo');
+        return view('dashboard.posts.create',['post' => new Post(), 'categories' => $categories]);
     }
 
     /**
@@ -70,7 +79,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('dashboard.posts.edit', ['post' => $post]);
+        $categories = Category::get()->pluck('id','titulo');
+        return view('dashboard.posts.edit', ['post' => $post, 'categories' => $categories]);
     }
 
     /**
@@ -97,5 +107,22 @@ class PostController extends Controller
     {
         $post->delete();
         return back()->with('status','Post eliminado con exito');
+    }
+
+    //Subir foto
+    public function image(Request $request,Post $post)
+    {
+        $request->validate([
+            'image'=> 'required|mimes:jpeg,bmp,png|max:10240'
+        ]);
+        $filename = time().".".$request->image->extension();
+        $request->image->move(public_path('images'),$filename);
+        $data = [
+            'image' => $filename,
+            'post_id' => $post->id
+        ];
+        PostImage::create($data);
+        return back()->with('status','Imagen cargada con éxito');
+
     }
 }

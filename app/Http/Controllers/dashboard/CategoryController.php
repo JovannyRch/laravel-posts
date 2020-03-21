@@ -6,6 +6,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryPost;
+use Illuminate\Pagination\Paginator;
 
 class CategoryController extends Controller
 {
@@ -14,9 +15,14 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
-        $categories = Category::get();
+        $categories = Category::orderBy('created_at','asc')->paginate(10);
         return view('dashboard.categories.index', ['categories' => $categories]);
     }
 
@@ -86,8 +92,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return back()->with('status','La categoría se ha eliminado con éxito');
     }
 }
