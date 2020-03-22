@@ -66,7 +66,7 @@
     </div>
 </div>
 <script>
-    window.onload(function(event){
+    window.onload = function(event){
         
         $('#eliminarForm').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) 
@@ -79,6 +79,6 @@
             $('#modal-mensaje').html("¿Estás seguro de eliminar la categoría '" + titulo+"'?")
         
         });
-    })
+    }; 
   </script>
 @endsection

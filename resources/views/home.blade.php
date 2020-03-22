@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    {{auth()->user()->rol}}
                 </div>
             </div>
         </div>
