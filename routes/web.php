@@ -13,9 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return 'hola mundo :D';
-})->name('home');
+Route::get('/','web\WebController@index')->name('home');
+Route::get('/detail/{id}','web\WebController@detail')->name('detail');
+Route::get('/category/{id}','web\WebController@category')->name('category');
+Route::get('/contact','web\WebController@contact')->name('contact');
+Route::get('/categories','web\WebController@categories')->name('categories');
 /* 
 
 

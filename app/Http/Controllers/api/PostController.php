@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Post;
 use App\Category;
+use App\PostImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -11,17 +12,22 @@ class PostController extends Controller
 {
     public function index(){
         $posts = Post::
-        join('post_images','post_id','=','posts.id')->
-        join('categories','category_id','=','posts.id')->
-        select("posts.id","posts.title","categories.titulo as category","post_images.image")->
+        select("posts.id","posts.title","posts.category_id")->
         paginate(10);
+
+        foreach ($posts as &$p ) {
+            $p['category'] = Category::where('id','=',$p->category_id)->select('titulo as category')->first()['category'];
+            $p['image'] = PostImage::where("post_id","=",$p->id)->select('image')->first()['image'];
+            unset($p['category_id']);
+        }
         
         return response()->json($posts);
     }
 
     public function show(Post $post){
-        $post->image = $post->image->image;
-        $post->category = $post->category->title;
+        
+        $post['image'] = $post->image->image;
+        $post['category'] = $post->category->title;
         return response()->json($post);
     }
 
@@ -29,8 +35,11 @@ class PostController extends Controller
        
         $posts = Category::
         join('posts','category_id','=','categories.id')->
+        join('post_images','posts.id','=','post_images.id')->
         where('categories.id','=',$category->id)->
-        select('posts.id','posts.title')->paginate(10);
+        select('posts.id','posts.title','posts.content','post_images.image')->paginate(10);
+
+        
 
         return response()->json(["posts" => $posts, "category" => $category],200);
     }
